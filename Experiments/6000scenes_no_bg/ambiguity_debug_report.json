@@ -1,0 +1,212 @@
+{
+  "total_sources": 1364,
+  "total_scenes": 600,
+  "categories": {
+    "Easily Localisable": {
+      "n_scenes": 258,
+      "scenes": [
+        {
+          "scene_id": "scene05400",
+          "n_sources": 1,
+          "n_ambiguous": 0,
+          "azimuths": [
+            122.4
+          ],
+          "elevations": [
+            15.9
+          ]
+        },
+        {
+          "scene_id": "scene05401",
+          "n_sources": 1,
+          "n_ambiguous": 0,
+          "azimuths": [
+            72.1
+          ],
+          "elevations": [
+            -50.6
+          ]
+        },
+        {
+          "scene_id": "scene05402",
+          "n_sources": 1,
+          "n_ambiguous": 0,
+          "azimuths": [
+            218.4
+          ],
+          "elevations": [
+            63.1
+          ]
+        },
+        {
+          "scene_id": "scene05404",
+          "n_sources": 4,
+          "n_ambiguous": 0,
+          "azimuths": [
+            111.5,
+            244.9,
+            308.1,
+            287.3
+          ],
+          "elevations": [
+            -72.9,
+            50.0,
+            -43.4,
+            27.7
+          ]
+        },
+        {
+          "scene_id": "scene05405",
+          "n_sources": 1,
+          "n_ambiguous": 0,
+          "azimuths": [
+            223.9
+          ],
+          "elevations": [
+            -67.8
+          ]
+        }
+      ]
+    },
+    "Some Ambiguous": {
+      "n_scenes": 271,
+      "scenes": [
+        {
+          "scene_id": "scene05403",
+          "n_sources": 2,
+          "n_ambiguous": 1,
+          "azimuths": [
+            342.9,
+            292.8
+          ],
+          "elevations": [
+            -27.6,
+            -69.5
+          ]
+        },
+        {
+          "scene_id": "scene05409",
+          "n_sources": 2,
+          "n_ambiguous": 1,
+          "azimuths": [
+            222.2,
+            203.8
+          ],
+          "elevations": [
+            17.9,
+            44.4
+          ]
+        },
+        {
+          "scene_id": "scene05411",
+          "n_sources": 3,
+          "n_ambiguous": 1,
+          "azimuths": [
+            185.3,
+            263.8,
+            54.2
+          ],
+          "elevations": [
+            -63.3,
+            -71.3,
+            57.5
+          ]
+        },
+        {
+          "scene_id": "scene05412",
+          "n_sources": 4,
+          "n_ambiguous": 2,
+          "azimuths": [
+            57.6,
+            346.1,
+            254.9,
+            350.8
+          ],
+          "elevations": [
+            -38.9,
+            41.5,
+            57.2,
+            -86.7
+          ]
+        },
+        {
+          "scene_id": "scene05414",
+          "n_sources": 2,
+          "n_ambiguous": 1,
+          "azimuths": [
+            184.3,
+            54.5
+          ],
+          "elevations": [
+            -39.9,
+            -24.6
+          ]
+        }
+      ]
+    },
+    "All Ambiguous": {
+      "n_scenes": 71,
+      "scenes": [
+        {
+          "scene_id": "scene05406",
+          "n_sources": 2,
+          "n_ambiguous": 2,
+          "azimuths": [
+            186.9,
+            17.6
+          ],
+          "elevations": [
+            65.4,
+            16.1
+          ]
+        },
+        {
+          "scene_id": "scene05407",
+          "n_sources": 1,
+          "n_ambiguous": 1,
+          "azimuths": [
+            196.7
+          ],
+          "elevations": [
+            27.6
+          ]
+        },
+        {
+          "scene_id": "scene05437",
+          "n_sources": 1,
+          "n_ambiguous": 1,
+          "azimuths": [
+            21.7
+          ],
+          "elevations": [
+            -37.5
+          ]
+        },
+        {
+          "scene_id": "scene05442",
+          "n_sources": 2,
+          "n_ambiguous": 2,
+          "azimuths": [
+            205.6,
+            24.1
+          ],
+          "elevations": [
+            75.1,
+            79.4
+          ]
+        },
+        {
+          "scene_id": "scene05447",
+          "n_sources": 1,
+          "n_ambiguous": 1,
+          "azimuths": [
+            18.1
+          ],
+          "elevations": [
+            85.9
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,49 @@
+MODEL ARCHITECTURE
+============================================================
+
+CRNN(
+  (enc_conv0): Sequential(
+    (0): Conv2d(5, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU()
+  )
+  (enc_conv1): Sequential(
+    (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 1), padding=(1, 1))
+    (1): ReLU()
+  )
+  (enc_conv2): Sequential(
+    (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 1), padding=(1, 1))
+    (1): ReLU()
+  )
+  (rotation_branch): Sequential(
+    (0): Conv2d(1, 128, kernel_size=(4, 1), stride=(1, 1))
+    (1): ReLU()
+    (2): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+    (3): ReLU()
+  )
+  (gru): GRU(2176, 256, batch_first=True)
+  (tf_proj): Linear(in_features=256, out_features=2048, bias=True)
+  (dec_pre): Sequential(
+    (0): Conv2d(256, 128, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1))
+    (1): ReLU()
+  )
+  (fuse1): Sequential(
+    (0): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1))
+    (1): ReLU()
+  )
+  (up1): ConvTranspose2d(128, 128, kernel_size=(2, 1), stride=(2, 1))
+  (fuse2): Sequential(
+    (0): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1))
+    (1): ReLU()
+  )
+  (up2): ConvTranspose2d(128, 128, kernel_size=(2, 1), stride=(2, 1))
+  (fuse3): Sequential(
+    (0): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1))
+    (1): ReLU()
+  )
+  (out_conv): Conv2d(128, 4, kernel_size=(1, 1), stride=(1, 1))
+  (spatial_drop): Dropout2d(p=0.1, inplace=False)
+  (rnn_drop): Dropout(p=0.1, inplace=False)
+)
+
+============================================================
+Total trainable parameters: 2,977,284

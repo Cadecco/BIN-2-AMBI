@@ -1,0 +1,178 @@
+{
+  "annotations": [
+    {
+      "annotation_metadata": {
+        "curator": {
+          "name": "",
+          "email": ""
+        },
+        "annotator": {},
+        "version": "",
+        "corpus": "",
+        "annotation_tools": "",
+        "annotation_rules": "",
+        "validation": "",
+        "data_source": ""
+      },
+      "namespace": "ambiscaper_sound_event",
+      "data": [
+        {
+          "time": 0.0,
+          "duration": 8.0,
+          "value": {
+            "source_file": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Girls Under Glass - We Feel Alright\\vocals.flac",
+            "event_id": "fg0",
+            "source_time": 0.0,
+            "event_time": 0,
+            "event_duration": 8,
+            "event_azimuth": 4.542379043365332,
+            "event_elevation": 0,
+            "event_spread": 0,
+            "snr": 0.0,
+            "role": "foreground",
+            "pitch_shift": null,
+            "time_stretch": null,
+            "is_hoa": false
+          },
+          "confidence": 1.0
+        },
+        {
+          "time": 0.0,
+          "duration": 8.0,
+          "value": {
+            "source_file": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Girls Under Glass - We Feel Alright\\bass.flac",
+            "event_id": "fg1",
+            "source_time": 0.0,
+            "event_time": 0,
+            "event_duration": 8,
+            "event_azimuth": 1.4766996586276806,
+            "event_elevation": 0,
+            "event_spread": 0,
+            "snr": 0.0,
+            "role": "foreground",
+            "pitch_shift": null,
+            "time_stretch": null,
+            "is_hoa": false
+          },
+          "confidence": 1.0
+        }
+      ],
+      "sandbox": {
+        "ambiscaper": {
+          "duration": 8,
+          "fg_path": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Girls Under Glass - We Feel Alright",
+          "bg_path": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\samples\\backgrounds",
+          "fg_spec": [
+            [
+              [
+                "const",
+                "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Girls Under Glass - We Feel Alright\\vocals.flac"
+              ],
+              null,
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "const",
+                8
+              ],
+              [
+                "uniform",
+                0,
+                6.283185307179586
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "uniform",
+                0,
+                0
+              ],
+              "foreground",
+              null,
+              null,
+              false
+            ],
+            [
+              [
+                "const",
+                "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Girls Under Glass - We Feel Alright\\bass.flac"
+              ],
+              null,
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "const",
+                8
+              ],
+              [
+                "uniform",
+                0,
+                6.283185307179586
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "uniform",
+                0,
+                0
+              ],
+              "foreground",
+              null,
+              null,
+              false
+            ]
+          ],
+          "bg_spec": [],
+          "ref_db": -25,
+          "ambisonics_order": 5,
+          "ambisonics_spread_slope": 1.0,
+          "fade_in_len": 0.01,
+          "fade_out_len": 0.01,
+          "n_events": 2,
+          "polyphony_max": 2,
+          "polyphony_gini": 1.0,
+          "allow_repeated_source": false
+        }
+      },
+      "time": 0,
+      "duration": 8
+    }
+  ],
+  "file_metadata": {
+    "title": "",
+    "artist": "",
+    "release": "",
+    "duration": 8,
+    "identifiers": {},
+    "jams_version": "0.3.5"
+  },
+  "sandbox": {}
+}

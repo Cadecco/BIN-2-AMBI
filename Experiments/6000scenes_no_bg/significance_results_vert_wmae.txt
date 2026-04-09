@@ -1,0 +1,213 @@
+===== SIGNIFICANCE RESULTS =====
+Metric: Per-Scene Vertical WMAE (°)
+Alternative Hypothesis: greater
+Zero Method: wilcox
+
+========================================================================
+Comparison: ACCDOA V4 Model vs ACCDOA V4 Model STATIC
+Split: test
+Metric: Per-Scene Vertical WMAE (°)
+Common Scenes: 600
+
+Model A Mean: 8.306733° | Std: 6.039080°
+Model B Mean: 8.748731° | Std: 7.353223°
+
+Mean Paired Improvement (B - A):   0.441998°
+Median Paired Improvement (B - A): -0.085562°
+Std Paired Improvement:            3.846219°
+P50 Improvement: -0.085562° | P90: 2.990779° | P95: 6.068396° | P99: 13.317118°
+
+Scenes Improved: 283 (47.17%)
+Scenes Worsened: 317 (52.83%)
+Scenes Tied:     0 (0.00%)
+Effect Sign Fraction: -0.056667
+
+Wilcoxon Alternative: greater
+Wilcoxon Zero Method: wilcox
+Wilcoxon Statistic:   90344.000000
+Wilcoxon p-value:     4.817870e-01
+
+Sign Test Alternative: greater
+Sign Test Nonzero Pairs: 600
+Sign Test Positive:      283
+Sign Test Negative:      317
+Sign Test p-value:       9.235087e-01
+
+Symmetry Check for Paired Differences:
+  Skewness: 4.236601
+  |Mean - Median| / Std: 0.137163
+  Paired differences may be strongly skewed / asymmetric for Wilcoxon: abs(skewness)=4.237 exceeds 1.000. Consider interpreting Wilcoxon alongside the sign test and the histogram.
+Histogram: /Users/gavinmilner/Desktop/School Work/BIN2AMBI/experiments/6000scenes_no_bg/significance_histograms/accdoa_v4_model_vs_accdoa_v4_model_static_per_scene_vert_wmae_hist.pdf
+
+========================================================================
+BOOTSTRAP TAIL ANALYSIS
+Resamples: 10000
+CI Level: 0.95
+Quantiles: [90, 95, 99]
+Random Seed: 42
+
+========================================================================
+BOOTSTRAP TAIL ANALYSIS: ACCDOA V4 Model vs ACCDOA V4 Model STATIC
+Split: test
+Metric: Per-Scene Vertical WMAE (°)
+Common Scenes: 600
+
+Model A source: ACCDOA V4 Model (first model in the pairwise comparison / first aligned metric array)
+Model B source: ACCDOA V4 Model STATIC (second model in the pairwise comparison / second aligned metric array)
+
+Differences are reported as quantile(Model B) - quantile(Model A). Positive values mean Model A has lower tail error than Model B.
+
+90th Percentile Analysis
+  Model A 90th percentile: 16.441620°
+  Model B 90th percentile: 16.823359°
+  Difference (B - A):       0.381739°
+  95% Bootstrap CI:     [-0.701515°, 1.425268°]
+  One-sided bootstrap p-value (H1: Model A has lower 90th percentile error): 2.214779e-01
+  Interpretation: The CI crosses 0, so the difference in the 90th percentile is inconclusive.
+
+95th Percentile Analysis
+  Model A 95th percentile: 19.183467°
+  Model B 95th percentile: 21.013566°
+  Difference (B - A):       1.830099°
+  95% Bootstrap CI:     [-0.492420°, 3.228991°]
+  One-sided bootstrap p-value (H1: Model A has lower 95th percentile error): 8.639136e-02
+  Interpretation: The CI crosses 0, so the difference in the 95th percentile is inconclusive.
+
+99th Percentile Analysis
+  Model A 99th percentile: 26.485639°
+  Model B 99th percentile: 36.771430°
+  Difference (B - A):       10.285791°
+  95% Bootstrap CI:     [0.252577°, 23.009258°]
+  One-sided bootstrap p-value (H1: Model A has lower 99th percentile error): 1.939806e-02
+  Interpretation: The entire CI is above 0, which supports that Model A has lower 99th percentile error than Model B.
+
+
+========================================================================
+TOP IMPROVEMENT SCENES ANALYSIS
+
+========================================================================
+TOP 6 SCENES WITH LARGEST IMPROVEMENT (WORST FOR Model B)
+Comparison: ACCDOA V4 Model vs ACCDOA V4 Model STATIC
+Split: test
+
+Model A source: ACCDOA V4 Model
+Model B source: ACCDOA V4 Model STATIC
+Scenes are ranked by (Model B - Model A) descending (largest difference first). Positive values mean Model A has lower error than Model B.
+
+1. Scene ID: scene05826
+   Model A (ACCDOA V4 Model): 15.707632°
+   Model B (ACCDOA V4 Model STATIC): 61.338560°
+   Improvement (B - A): 45.630928°
+
+2. Scene ID: scene05899
+   Model A (ACCDOA V4 Model): 24.473457°
+   Model B (ACCDOA V4 Model STATIC): 50.914739°
+   Improvement (B - A): 26.441281°
+
+3. Scene ID: scene05740
+   Model A (ACCDOA V4 Model): 18.618784°
+   Model B (ACCDOA V4 Model STATIC): 42.929646°
+   Improvement (B - A): 24.310862°
+
+4. Scene ID: scene05871
+   Model A (ACCDOA V4 Model): 48.372368°
+   Model B (ACCDOA V4 Model STATIC): 68.891998°
+   Improvement (B - A): 20.519630°
+
+5. Scene ID: scene05569
+   Model A (ACCDOA V4 Model): 8.357973°
+   Model B (ACCDOA V4 Model STATIC): 28.082580°
+   Improvement (B - A): 19.724607°
+
+6. Scene ID: scene05508
+   Model A (ACCDOA V4 Model): 8.161853°
+   Model B (ACCDOA V4 Model STATIC): 22.380539°
+   Improvement (B - A): 14.218687°
+
+
+========================================================================
+BOTTOM IMPROVEMENT SCENES ANALYSIS
+
+========================================================================
+TOP 6 SCENES WITH SMALLEST IMPROVEMENT (BEST FOR Model B)
+Comparison: ACCDOA V4 Model vs ACCDOA V4 Model STATIC
+Split: test
+
+Model A source: ACCDOA V4 Model
+Model B source: ACCDOA V4 Model STATIC
+Scenes are ranked by (Model B - Model A) ascending (smallest difference first). These are scenes where Model A's advantage over Model B is smallest, or where Model B outperforms Model A.
+
+1. Scene ID: scene05703
+   Model A (ACCDOA V4 Model): 35.296974°
+   Model B (ACCDOA V4 Model STATIC): 17.431284°
+   Improvement (B - A): -17.865689°
+
+2. Scene ID: scene05605
+   Model A (ACCDOA V4 Model): 25.807283°
+   Model B (ACCDOA V4 Model STATIC): 16.039827°
+   Improvement (B - A): -9.767456°
+
+3. Scene ID: scene05509
+   Model A (ACCDOA V4 Model): 17.951723°
+   Model B (ACCDOA V4 Model STATIC): 8.329306°
+   Improvement (B - A): -9.622418°
+
+4. Scene ID: scene05676
+   Model A (ACCDOA V4 Model): 23.360140°
+   Model B (ACCDOA V4 Model STATIC): 14.192610°
+   Improvement (B - A): -9.167529°
+
+5. Scene ID: scene05755
+   Model A (ACCDOA V4 Model): 16.983858°
+   Model B (ACCDOA V4 Model STATIC): 7.838862°
+   Improvement (B - A): -9.144996°
+
+6. Scene ID: scene05621
+   Model A (ACCDOA V4 Model): 21.127996°
+   Model B (ACCDOA V4 Model STATIC): 12.227538°
+   Improvement (B - A): -8.900458°
+
+
+========================================================================
+CLOSEST TO ZERO SCENES ANALYSIS (NEAR DRAWS)
+
+========================================================================
+TOP 6 SCENES WITH DIFFERENCE CLOSEST TO ZERO (NEAR DRAWS)
+Comparison: ACCDOA V4 Model vs ACCDOA V4 Model STATIC
+Split: test
+
+Model A source: ACCDOA V4 Model
+Model B source: ACCDOA V4 Model STATIC
+Scenes are ranked by abs(Model B - Model A) ascending. These are the scenes where the two models perform most similarly.
+
+1. Scene ID: scene05836
+   Model A (ACCDOA V4 Model): 7.343248°
+   Model B (ACCDOA V4 Model STATIC): 7.346298°
+   Difference (B - A): 0.003050° (abs: 0.003050°)
+
+2. Scene ID: scene05927
+   Model A (ACCDOA V4 Model): 13.980791°
+   Model B (ACCDOA V4 Model STATIC): 13.987798°
+   Difference (B - A): 0.007006° (abs: 0.007006°)
+
+3. Scene ID: scene05697
+   Model A (ACCDOA V4 Model): 1.449889°
+   Model B (ACCDOA V4 Model STATIC): 1.442335°
+   Difference (B - A): -0.007554° (abs: 0.007554°)
+
+4. Scene ID: scene05804
+   Model A (ACCDOA V4 Model): 1.785348°
+   Model B (ACCDOA V4 Model STATIC): 1.777660°
+   Difference (B - A): -0.007688° (abs: 0.007688°)
+
+5. Scene ID: scene05726
+   Model A (ACCDOA V4 Model): 1.006862°
+   Model B (ACCDOA V4 Model STATIC): 1.017511°
+   Difference (B - A): 0.010649° (abs: 0.010649°)
+
+6. Scene ID: scene05982
+   Model A (ACCDOA V4 Model): 1.939833°
+   Model B (ACCDOA V4 Model STATIC): 1.927650°
+   Difference (B - A): -0.012183° (abs: 0.012183°)
+
+

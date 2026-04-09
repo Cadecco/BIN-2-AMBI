@@ -1,0 +1,87 @@
+analysis:
+  alpha: 0.9
+  extract:
+    IC: true
+    ILD: true
+    IPD: true
+    ITD: false
+    MEAN_MAG: true
+  mel:
+    active: true
+    n_mels: 64
+  overlap: 0.5
+  rotation:
+    rot0: false
+    rot1: true
+  sample_rate: 48000
+  start_freq: 0
+  stop_freq: 24000
+  window_length: 40
+  window_size: 1024
+dataset_name: listening_test
+dirac_analysis:
+  diffsmooth:
+    cycles: 30
+    limf: 10000
+  dirsmooth:
+    cycles: 20
+    limf: 3000
+  energy_smooth: 0
+  intensity_short_smooth: 0
+  intensity_smooth: 0
+  mel:
+    active: true
+    f_max: 24000
+    htk: false
+    n_mels: 64
+generation:
+  bg_chance: 0
+  event:
+    azimuth_range:
+    - 0
+    - 2
+    elevation_range:
+    - 0
+    - 0
+    pitch_shift: None
+    snr: 10
+    spread: 0
+    time_stretch: None
+  file_type: .flac
+  ht_synthetic: false
+  noise_reference: -25
+  num_channels: 5
+  num_events: 1
+  num_scenes: 14
+  scene_duration: 8
+  start_id: 13
+metadata:
+  csv_name: features_metadata.csv
+  save_csv: true
+paths:
+  ambisonics_folder: FOA
+  base_dir: datasets
+  binaural_folder: Binaural
+  features_folder: features
+  fft_folder: fft
+  google_drive_path: G:\My Drive\BIN2AMBI
+  groundtruth_folder: groundtruth
+  save_to_drive: false
+training:
+  batch_size: 8
+  device: cuda
+  inputs:
+  - ILD
+  - IPD_sine
+  - IPD_cosine
+  - mean_mag
+  - IC
+  - rotation
+  lr: 0.001
+  model:
+    rnn_units: 128
+  num_epochs: 50
+  seed: 17
+  test_ratio: 0.1
+  train_ratio: 0.8
+  val_ratio: 0.1

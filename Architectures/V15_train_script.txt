@@ -1,0 +1,170 @@
+# Start the training
+import matplotlib.pyplot as plt
+import torch
+import torch.nn as nn
+import pandas as pd
+import math
+import copy
+
+lr = config['training']['lr']
+#weight_decay = config['training']['weight_decay']
+
+USE_SCHEDULER = True
+
+optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4, weight_decay=1e-4)
+# = nn.MSELoss()
+l2_loss = nn.MSELoss()
+loss_function = accdoa_loss
+
+# Learning Rate Scheduler
+if USE_SCHEDULER:
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
+        optimizer,
+        T_0=50,       # restart every 50 epochs
+        T_mult=1,     # keep restart period constant
+        eta_min=1e-6  # minimum LR
+    )
+else:
+    scheduler = None
+
+# Save loss function used to text file
+save_training_config_to_file(loss_function, optimizer, scheduler, loss_fn_path)
+
+# Early Stopping
+EARLY_STOPPING = False
+patience = 15
+min_delta = 1e-4
+best_val = math.inf
+best_epoch = -1
+epochs_no_improve = 0
+
+num_epochs = config['training']['num_epochs']
+num_epochs = 300
+save_dir = MODELS_DIR
+save_dir.mkdir(exist_ok=True)
+
+best_ckpt_path = save_dir / "model_best.pt"
+
+train_losses = []
+val_losses = []
+
+print("Starting Training ...")
+
+for epoch in range(num_epochs):
+    model.train()
+    epoch_train_loss = 0.0
+
+    for batch_inputs, target, _ in train_loader:
+        # Move to device
+        batch_inputs = {k: v.to(device) for k, v in batch_inputs.items()}
+        target = target.to(device)
+
+        # NEW: crop time to reduce VRAM
+        spectral, rotation, target = crop_time_train(batch_inputs, target, epoch, WIN_T)
+
+        optimizer.zero_grad(set_to_none=True)
+        pred = model(spectral, rotation)
+
+        target_ch = target[:, 1:5, :, :]
+        #pred = pred[:, 1:4, :, :]
+        assert pred.shape == target_ch.shape, f"Pred {pred.shape} vs GT {target_ch.shape}"
+        # LOSS FUNCTION:
+        loss = loss_function(pred, target_ch)
+
+        loss.backward()
+        optimizer.step()
+
+        epoch_train_loss += loss.item()
+
+    epoch_train_loss /= len(train_loader)
+    train_losses.append(epoch_train_loss)
+
+    # ---- Validation ----
+    model.eval()
+    epoch_val_loss = 0.0
+    with torch.no_grad():
+        for batch_inputs, target, _ in val_loader:
+            batch_inputs = {k: v.to(device) for k, v in batch_inputs.items()}
+            target = target.to(device)
+
+            # NEW: deterministic crop for val
+            spectral, rotation, target = crop_time_val(batch_inputs, target, WIN_T)
+
+            target_ch = target[:, 1:5, :, :]
+            pred = model(spectral, rotation)
+            #pred = pred[:, 1:4, :, :]
+            # LOSS FUNCTION:
+            loss = loss_function(pred, target_ch)
+            epoch_val_loss += loss.item()
+
+    epoch_val_loss /= len(val_loader)
+    val_losses.append(epoch_val_loss)
+
+    # Step scheduler on validation loss
+    if scheduler is not None:
+        scheduler.step(epoch)
+
+    # Log LR
+    current_lr = optimizer.param_groups[0]["lr"]
+
+    writer.add_scalars(
+        "loss",
+        {"train": epoch_train_loss, "val": epoch_val_loss},
+        epoch
+    )
+    writer.add_scalar("lr", current_lr, epoch)
+
+    # ---- Save loss history every 10 epochs ----
+    if (epoch + 1) % 10 == 0:
+        df = pd.DataFrame({
+            "epoch": list(range(1, len(train_losses) + 1)),
+            "train_loss": train_losses,
+            "val_loss": val_losses
+        })
+        df.to_csv(loss_csv_path, index=False)
+
+    print(
+        f"Epoch {epoch+1} | Train Loss: {epoch_train_loss:.4f} | "
+        f"Val Loss: {epoch_val_loss:.4f} | LR: {current_lr:.2e}"
+    )
+
+    # Save checkpoint
+    save_path = save_dir / f"model_epoch_{epoch+1}.pt"
+    save_checkpoint(model, optimizer, epoch+1, save_path)
+
+    # ---- Early stopping + save best ----
+    if EARLY_STOPPING:
+        improved = (best_val - epoch_val_loss) > min_delta
+        if improved:
+            best_val = epoch_val_loss
+            best_epoch = epoch + 1
+            epochs_no_improve = 0
+
+            # Save BEST checkpoint
+            save_checkpoint(model, optimizer, best_epoch, best_ckpt_path)
+        else:
+            epochs_no_improve += 1
+
+        if epochs_no_improve >= patience:
+            print(
+                f"Early stopping triggered at epoch {epoch+1}. "
+                f"Best val loss {best_val:.6f} at epoch {best_epoch}."
+            )
+            # Save the model weights to the experiment directory
+            save_path = os.path.join(log_dir, "model.pt")
+            torch.save(model.state_dict(), save_path)
+            break
+
+# Save final loss history
+df = pd.DataFrame({
+    "epoch": list(range(1, len(train_losses) + 1)),
+    "train_loss": train_losses,
+    "val_loss": val_losses
+})
+df.to_csv(loss_csv_path, index=False)
+
+writer.close()
+
+# Save the model weights to the experiment directory
+save_path = os.path.join(log_dir, "model.pt")
+torch.save(model.state_dict(), save_path)

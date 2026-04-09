@@ -1,0 +1,91 @@
+import torch
+import torch.nn as nn
+import torch.nn.functional as torch_f
+
+class CRNN_NoDecoder(nn.Module):
+    def __init__(self, in_channels=5, output_dim=4, f_bins=64,
+                 rnn_hidden=256, dropout=0.2,
+                 use_rotation=True):
+        super().__init__()
+
+        self.f_bins = f_bins
+        self.output_dim = output_dim
+        self.use_rotation = use_rotation
+
+        # --- Encoder: Downsample Frequency by 4x total ---
+        self.enc_conv0 = nn.Sequential(
+            nn.Conv2d(in_channels, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+        )
+
+        self.enc_conv1 = nn.Sequential(
+            nn.Conv2d(128, 128, kernel_size=3, padding=1, stride=(2, 1)),
+            nn.ReLU(),
+        )
+
+        self.enc_conv2 = nn.Sequential(
+            nn.Conv2d(128, 128, kernel_size=3, padding=1, stride=(2, 1)),
+            nn.ReLU(),
+        )
+
+        self.f_reduced = f_bins // 4
+        self.audio_out_dim = 128 * self.f_reduced
+
+        # --- Rotation branch ---
+        self.rotation_branch = nn.Sequential(
+            nn.Conv2d(1, 128, kernel_size=(4, 1)),
+            nn.ReLU(),
+            nn.Conv2d(128, 128, kernel_size=1),
+            nn.ReLU()
+        )
+
+        # --- GRU ---
+        self.gru = nn.GRU(
+            input_size=self.audio_out_dim + 128,
+            hidden_size=rnn_hidden,
+            batch_first=True,
+            bidirectional=False
+        )
+
+        # --- Direct projection to full output ---
+        self.out_proj = nn.Linear(rnn_hidden, output_dim * f_bins)
+
+        # Dropout
+        self.spatial_drop = nn.Dropout2d(dropout)
+        self.rnn_drop = nn.Dropout(dropout)
+
+    def forward(self, spatial, rotation):
+        B, C, F, T = spatial.shape
+
+        # ---- Encode ----
+        s0 = self.enc_conv0(spatial)
+        s0 = self.spatial_drop(s0)
+
+        s1 = self.enc_conv1(s0)
+        s1 = self.spatial_drop(s1)
+
+        s2 = self.enc_conv2(s1)
+        s2 = self.spatial_drop(s2)
+
+        # Audio to GRU
+        x_audio = s2.permute(0, 3, 1, 2).reshape(B, T, -1)
+
+        # ---- Rotation branch ----
+        if self.use_rotation:
+            r = rotation.unsqueeze(1)
+            r = self.rotation_branch(r)
+            r = r.squeeze(2).permute(0, 2, 1)
+        else:
+            r = torch.zeros(B, T, 128, device=spatial.device)
+
+        # ---- GRU ----
+        x = torch.cat([x_audio, r], dim=-1)
+        x, _ = self.gru(x)
+        x = self.rnn_drop(x)
+
+        # ---- Direct projection to output ----
+        x = self.out_proj(x)                        # (B, T, output_dim * f_bins)
+        x = x.view(B, T, self.output_dim, F)
+        x = x.permute(0, 2, 3, 1).contiguous()      # (B, output_dim, F, T)
+
+        return x

@@ -1,0 +1,259 @@
+{
+  "metric_key": "per_scene_wmae",
+  "metric_display_name": "Per-Scene WMAE (\u00b0)",
+  "wilcoxon_alternative": "greater",
+  "wilcoxon_zero_method": "wilcox",
+  "comparisons": [
+    {
+      "comparison": "Rotation Model vs Static Model",
+      "model_a_name": "Rotation Model",
+      "model_b_name": "Static Model",
+      "split": "test",
+      "metric_key": "per_scene_wmae",
+      "n_common_scenes": 600,
+      "mean_model_a": 11.930235618177736,
+      "std_model_a": 7.62693958298134,
+      "mean_model_b": 12.22077539640584,
+      "std_model_b": 9.204144961781386,
+      "mean_paired_improvement": 0.2905397782281027,
+      "median_paired_improvement": -0.3283340311875156,
+      "std_paired_improvement": 4.698368653683276,
+      "p50_improvement": -0.3283340311875156,
+      "p90_improvement": 3.7293453780368444,
+      "p95_improvement": 6.731149678032054,
+      "p99_improvement": 19.47680127017736,
+      "n_improved": 231,
+      "n_worsened": 369,
+      "n_tied": 0,
+      "percent_improved": 38.5,
+      "percent_worsened": 61.5,
+      "percent_tied": 0.0,
+      "effect_sign_fraction": -0.23,
+      "wilcoxon_alternative": "greater",
+      "wilcoxon_zero_method": "wilcox",
+      "wilcoxon_statistic": 76186.0,
+      "wilcoxon_pvalue": 0.9994941228549525,
+      "sign_test": {
+        "n_nonzero": 600,
+        "n_positive": 231,
+        "n_negative": 369,
+        "pvalue": 0.999999994000226,
+        "alternative": "greater"
+      },
+      "symmetry_check": {
+        "n": 600,
+        "skewness": 3.7270858191370273,
+        "mean_minus_median_over_std": 0.13172099829383407,
+        "warning": "Paired differences may be strongly skewed / asymmetric for Wilcoxon: abs(skewness)=3.727 exceeds 1.000. Consider interpreting Wilcoxon alongside the sign test and the histogram."
+      },
+      "histogram_path": "/Users/gavinmilner/Desktop/School Work/BIN2AMBI/experiments/6000scenes_no_bg/significance_histograms/rotation_model_vs_static_model_per_scene_wmae_hist.pdf"
+    }
+  ],
+  "bootstrap_tail_analysis": [
+    {
+      "comparison": "Rotation Model vs Static Model",
+      "model_a_name": "Rotation Model",
+      "model_b_name": "Static Model",
+      "split": "test",
+      "metric_key": "per_scene_wmae",
+      "n_common_scenes": 600,
+      "quantile_results": [
+        {
+          "quantile": 90,
+          "model_a_quantile": 22.15362147344746,
+          "model_b_quantile": 22.37729407664315,
+          "difference_b_minus_a": 0.22367260319569127,
+          "ci_level": 0.95,
+          "ci_lower": -1.2262295845120639,
+          "ci_upper": 1.5043756696796782,
+          "bootstrap_pvalue_greater": 0.41075892410758924,
+          "n_resamples": 10000,
+          "seed": 132
+        },
+        {
+          "quantile": 95,
+          "model_a_quantile": 26.566117052258118,
+          "model_b_quantile": 27.567385803298194,
+          "difference_b_minus_a": 1.001268751040076,
+          "ci_level": 0.95,
+          "ci_lower": -1.205120320634759,
+          "ci_upper": 6.1066902625913215,
+          "bootstrap_pvalue_greater": 0.16248375162483752,
+          "n_resamples": 10000,
+          "seed": 137
+        },
+        {
+          "quantile": 99,
+          "model_a_quantile": 35.35227717209649,
+          "model_b_quantile": 49.1046140562481,
+          "difference_b_minus_a": 13.75233688415161,
+          "ci_level": 0.95,
+          "ci_lower": 2.4610662424054475,
+          "ci_upper": 27.42447739554901,
+          "bootstrap_pvalue_greater": 0.0057994200579942,
+          "n_resamples": 10000,
+          "seed": 141
+        }
+      ],
+      "interpretation_note": "Differences are reported as quantile(Model B) - quantile(Model A). Positive values mean Model A has lower tail error than Model B."
+    }
+  ],
+  "top_improvement_scenes": [
+    {
+      "comparison": "Rotation Model vs Static Model",
+      "model_a_name": "Rotation Model",
+      "model_b_name": "Static Model",
+      "split": "test",
+      "metric_key": "per_scene_wmae",
+      "top_k": 6,
+      "top_scenes": [
+        {
+          "scene_id": "scene05826",
+          "model_a_value": 17.78334244439415,
+          "model_b_value": 64.36185079351067,
+          "improvement_b_minus_a": 46.57850834911652
+        },
+        {
+          "scene_id": "scene05816",
+          "model_a_value": 26.974029419102244,
+          "model_b_value": 66.78280521802871,
+          "improvement_b_minus_a": 39.80877579892647
+        },
+        {
+          "scene_id": "scene05899",
+          "model_a_value": 25.943268350527227,
+          "model_b_value": 52.55511921603434,
+          "improvement_b_minus_a": 26.611850865507115
+        },
+        {
+          "scene_id": "scene05740",
+          "model_a_value": 24.91209637149948,
+          "model_b_value": 49.10190579226675,
+          "improvement_b_minus_a": 24.18980942076727
+        },
+        {
+          "scene_id": "scene05650",
+          "model_a_value": 12.386866989844295,
+          "model_b_value": 35.26240013314846,
+          "improvement_b_minus_a": 22.875533143304168
+        },
+        {
+          "scene_id": "scene05871",
+          "model_a_value": 49.91509237682051,
+          "model_b_value": 70.27831121003864,
+          "improvement_b_minus_a": 20.363218833218127
+        }
+      ],
+      "interpretation_note": "Scenes are ranked by (Model B - Model A) descending (largest difference first). Positive values mean Model A has lower error than Model B."
+    }
+  ],
+  "bottom_improvement_scenes": [
+    {
+      "comparison": "Rotation Model vs Static Model",
+      "model_a_name": "Rotation Model",
+      "model_b_name": "Static Model",
+      "split": "test",
+      "metric_key": "per_scene_wmae",
+      "top_k": 6,
+      "bottom_scenes": [
+        {
+          "scene_id": "scene05703",
+          "model_a_value": 42.628562957714166,
+          "model_b_value": 22.41582317326431,
+          "improvement_b_minus_a": -20.212739784449855
+        },
+        {
+          "scene_id": "scene05594",
+          "model_a_value": 21.695343708384303,
+          "model_b_value": 8.80648718375316,
+          "improvement_b_minus_a": -12.888856524631143
+        },
+        {
+          "scene_id": "scene05605",
+          "model_a_value": 32.529715587543166,
+          "model_b_value": 21.411079498164654,
+          "improvement_b_minus_a": -11.118636089378512
+        },
+        {
+          "scene_id": "scene05856",
+          "model_a_value": 36.90041403128394,
+          "model_b_value": 26.309295938742864,
+          "improvement_b_minus_a": -10.591118092541073
+        },
+        {
+          "scene_id": "scene05676",
+          "model_a_value": 28.534370838875557,
+          "model_b_value": 18.188945988677975,
+          "improvement_b_minus_a": -10.345424850197581
+        },
+        {
+          "scene_id": "scene05755",
+          "model_a_value": 19.70220476534913,
+          "model_b_value": 9.527193567033315,
+          "improvement_b_minus_a": -10.175011198315815
+        }
+      ],
+      "interpretation_note": "Scenes are ranked by (Model B - Model A) ascending (smallest difference first). These are scenes where Model A's advantage over Model B is smallest, or where Model B outperforms Model A."
+    }
+  ],
+  "closest_to_zero_scenes": [
+    {
+      "comparison": "Rotation Model vs Static Model",
+      "model_a_name": "Rotation Model",
+      "model_b_name": "Static Model",
+      "split": "test",
+      "metric_key": "per_scene_wmae",
+      "top_k": 6,
+      "closest_scenes": [
+        {
+          "scene_id": "scene05799",
+          "model_a_value": 9.657595211590868,
+          "model_b_value": 9.658008072567897,
+          "improvement_b_minus_a": 0.00041286097702908364,
+          "abs_difference": 0.00041286097702908364
+        },
+        {
+          "scene_id": "scene05832",
+          "model_a_value": 1.5624683039797849,
+          "model_b_value": 1.564454750436592,
+          "improvement_b_minus_a": 0.0019864464568071227,
+          "abs_difference": 0.0019864464568071227
+        },
+        {
+          "scene_id": "scene05679",
+          "model_a_value": 2.8555288111652097,
+          "model_b_value": 2.853417367771924,
+          "improvement_b_minus_a": -0.002111443393285839,
+          "abs_difference": 0.002111443393285839
+        },
+        {
+          "scene_id": "scene05692",
+          "model_a_value": 4.334662061695216,
+          "model_b_value": 4.3224075761050695,
+          "improvement_b_minus_a": -0.012254485590146302,
+          "abs_difference": 0.012254485590146302
+        },
+        {
+          "scene_id": "scene05549",
+          "model_a_value": 3.3315273645548995,
+          "model_b_value": 3.3440747622954095,
+          "improvement_b_minus_a": 0.012547397740509947,
+          "abs_difference": 0.012547397740509947
+        },
+        {
+          "scene_id": "scene05620",
+          "model_a_value": 27.394552055586846,
+          "model_b_value": 27.411701065240635,
+          "improvement_b_minus_a": 0.017149009653788738,
+          "abs_difference": 0.017149009653788738
+        }
+      ],
+      "interpretation_note": "Scenes are ranked by abs(Model B - Model A) ascending. These are the scenes where the two models perform most similarly."
+    }
+  ],
+  "group_plots": {
+    "n_events_plot": "/Users/gavinmilner/Desktop/School Work/BIN2AMBI/experiments/6000scenes_no_bg/significance_plots/wmae_vs_num_sources_with_std.pdf",
+    "snr_plot": "/Users/gavinmilner/Desktop/School Work/BIN2AMBI/experiments/6000scenes_no_bg/significance_plots/wmae_vs_snr_bucket_with_std.pdf",
+    "boxplot_n_events": "/Users/gavinmilner/Desktop/School Work/BIN2AMBI/experiments/6000scenes_no_bg/significance_plots/wmae_vs_num_sources_boxplot.pdf"
+  }
+}

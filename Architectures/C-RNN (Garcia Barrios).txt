@@ -1,0 +1,119 @@
+# CRNN Model Class
+
+import torch
+import torch.nn as nn
+
+class CRNN(nn.Module):
+    def __init__(self, output_dim, f_bins=64, rnn_hidden=128):
+
+        super().__init__()
+
+        # -------------------------
+        # Branch 1: Spatial / audio features
+        # -------------------------
+        # Input: (B, C, F, T)
+        self.audio_branch = nn.Sequential(
+            nn.Conv2d(3, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+            #nn.MaxPool2d((2, 1)),
+            nn.Conv2d(128, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+            #nn.MaxPool2d((2, 1)),
+            nn.Conv2d(128, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+            #nn.MaxPool2d((2, 1))  # pool only along frequency
+        )
+
+        # Output dimension after pooling along F
+        self.audio_out_dim = 128 * (f_bins // 8)
+        #self.audio_out_dim = 128
+
+        # -------------------------
+        # Branch 2: Rotation features
+        # -------------------------
+        # Input: (B, 1, 4, T)
+        self.rotation_branch = nn.Sequential(
+            nn.Conv2d(1, 128, kernel_size=(4,1)),  # kernel spans rotation_dim
+            nn.ReLU(),
+            nn.Conv2d(128, 128, kernel_size=1),
+            nn.ReLU()
+        )
+        self.rotation_out_dim = 128
+
+        # -------------------------
+        # GRU
+        # -------------------------
+        self.gru_input_dim = self.audio_out_dim + self.rotation_out_dim
+        self.gru = nn.GRU(
+            input_size=self.gru_input_dim,
+            hidden_size=rnn_hidden,
+            batch_first=True
+        )
+
+        # Normalisation layer
+        self.post_gru_ln = nn.LayerNorm(rnn_hidden)
+
+        # Add 30% dropout
+        #self.post_gru_dropout = nn.Dropout(0.2)
+
+        self.decoder = nn.Sequential(
+            nn.Conv2d(rnn_hidden, 128, kernel_size=(3,1), padding=(1,0)),
+            nn.ReLU(),
+            nn.Conv2d(128, output_dim, kernel_size=1)
+        )
+
+        # -------------------------
+        # Fully connected layers
+        # -------------------------
+        self.fc = nn.Sequential(
+            nn.Linear(rnn_hidden, rnn_hidden),
+            nn.ReLU(),
+            nn.Linear(rnn_hidden, output_dim * f_bins),  # map to output_dim * F
+        )
+
+        self.output_dim = output_dim
+        self.f_bins = f_bins
+
+    def forward(self, spatial, rotation):
+        """
+        spatial:  (B, 3, F, T)
+        rotation: (B, 4, T)
+        Returns:
+            (B, output_dim, F, T)
+        """
+        B, _, F, T = spatial.shape
+
+        # -------------------------
+        # Branch 1: Audio / spatial
+        # -------------------------
+        x_audio = self.audio_branch(spatial)         # (B, 128, F//2, T)
+        x_audio = x_audio.permute(0, 3, 1, 2)        # (B, T, 128, F//2)
+        x_audio = x_audio.reshape(B, T, -1)          # (B, T, 128*F//2)
+
+        # -------------------------
+        # Branch 2: Rotation
+        # -------------------------
+        r = rotation.unsqueeze(1)                     # (B, 1, 4, T)
+        r = self.rotation_branch(r)                   # (B, 128, 1, T)
+        r = r.squeeze(2).permute(0, 2, 1)            # (B, T, 128)
+
+        # -------------------------
+        # Concatenate branches
+        # -------------------------
+        x = torch.cat([x_audio, r], dim=-1)          # (B, T, audio_out + rot_out)
+
+        # -------------------------
+        # GRU
+        # -------------------------
+        x, _ = self.gru(x)                           # (B, T, rnn_hidden)
+        #x = self.post_gru_ln(x)                      # Normalise output of RNN
+        #x = self.post_gru_dropout(x)                 # Dropout
+
+        # -------------------------
+        # Fully connected
+        # -------------------------
+        x = self.fc(x)                               # (B, T, output_dim * F)
+        x = x.view(B, T, self.output_dim, self.f_bins)  # (B, T, C, F)
+        x = x.permute(0, 2, 3, 1)                    # (B, C, F, T)
+
+        return x

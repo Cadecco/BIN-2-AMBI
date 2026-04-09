@@ -1,0 +1,74 @@
+=== Running AMBIQUAL evaluation ===
+Dataset:    6000scenes
+Experiment: CRNN_V15_Rotation_BG
+GT dir:     C:\Users\Gmiln\Desktop\BIN2AMBI\Datasets\6000scenes\FOA
+Pred dir:   C:\Users\Gmiln\Desktop\BIN2AMBI\Experiments\CRNN_V15_Rotation_BG\pred_resynth
+Output CSV: C:\Users\Gmiln\Desktop\BIN2AMBI\Experiments\CRNN_V15_Rotation_BG\ambiqual_per_scene.csv
+
+=== AMBIQUAL Test Set Summary ===
+Scored scenes: 201 (GT indexed: 1200, GT resynth indexed: 201, Pred resynth indexed: 201)
+Missing pred resynth (999): ['scene04800', 'scene04801', 'scene04802', 'scene04803', 'scene04804', 'scene04805', 'scene04806', 'scene04807', 'scene04808', 'scene04809']...
+Missing gt resynth (999): ['scene04800', 'scene04801', 'scene04802', 'scene04803', 'scene04804', 'scene04805', 'scene04806', 'scene04807', 'scene04808', 'scene04809']...
+
+GT Resynth - Listening Quality (LQ)
+-----------------------------------
+    mean :  0.6974
+     std :  0.1002
+     min :  0.4402
+     max :  0.9430
+  median :  0.7012
+     p10 :  0.5686
+     p90 :  0.8146
+
+GT Resynth - Localization Accuracy (LA)
+---------------------------------------
+    mean :  0.1499
+     std :  0.0989
+     min :  0.0391
+     max :  0.6020
+  median :  0.1261
+     p10 :  0.0577
+     p90 :  0.2663
+
+Pred Resynth - Listening Quality (LQ)
+-------------------------------------
+    mean :  0.6735
+     std :  0.0951
+     min :  0.3995
+     max :  0.9144
+  median :  0.6760
+     p10 :  0.5528
+     p90 :  0.7849
+
+Pred Resynth - Localization Accuracy (LA)
+-----------------------------------------
+    mean :  0.1206
+     std :  0.0748
+     min :  0.0377
+     max :  0.4802
+  median :  0.1028
+     p10 :  0.0491
+     p90 :  0.2021
+
+LQ (Pred % of GT Resynth)
+-------------------------
+    mean :  96.6726
+     std :  3.5967
+     min :  83.5683
+     max :  110.5346
+  median :  96.8467
+     p10 :  92.3161
+     p90 :  100.6058
+
+LA (Pred % of GT Resynth)
+-------------------------
+    mean :  82.8589
+     std :  9.5339
+     min :  41.9449
+     max :  106.5473
+  median :  84.1659
+     p10 :  70.2835
+     p90 :  93.5952
+
+Wrote per-scene CSV: C:\Users\Gmiln\Desktop\BIN2AMBI\Experiments\CRNN_V15_Rotation_BG\ambiqual_per_scene.csv
+Wrote results log: C:\Users\Gmiln\Desktop\BIN2AMBI\Experiments\CRNN_V15_Rotation_BG\ambiqual_results.txt

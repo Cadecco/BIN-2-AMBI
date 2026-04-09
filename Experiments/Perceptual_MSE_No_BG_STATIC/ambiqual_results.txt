@@ -1,0 +1,72 @@
+=== Running AMBIQUAL evaluation ===
+Dataset:    listening_test
+Experiment: Perceptual_MSE_No_BG_STATIC
+GT dir:     C:\Users\Gmiln\Desktop\BIN2AMBI\Datasets\listening_test\FOA
+Pred dir:   C:\Users\Gmiln\Desktop\BIN2AMBI\Experiments\Perceptual_MSE_No_BG_STATIC\pred_resynth
+Output CSV: C:\Users\Gmiln\Desktop\BIN2AMBI\Experiments\Perceptual_MSE_No_BG_STATIC\ambiqual_per_scene.csv
+
+=== AMBIQUAL Test Set Summary ===
+Scored scenes: 14 (GT indexed: 14, GT resynth indexed: 14, Pred resynth indexed: 14)
+
+GT Resynth - Listening Quality (LQ)
+-----------------------------------
+    mean :  0.7375
+     std :  0.1933
+     min :  0.4517
+     max :  1.0000
+  median :  0.6936
+     p10 :  0.5015
+     p90 :  0.9983
+
+GT Resynth - Localization Accuracy (LA)
+---------------------------------------
+    mean :  0.3181
+     std :  0.3764
+     min :  0.0448
+     max :  1.0000
+  median :  0.1070
+     p10 :  0.0590
+     p90 :  0.9843
+
+Pred Resynth - Listening Quality (LQ)
+-------------------------------------
+    mean :  0.6708
+     std :  0.0257
+     min :  0.6146
+     max :  0.7042
+  median :  0.6782
+     p10 :  0.6401
+     p90 :  0.6999
+
+Pred Resynth - Localization Accuracy (LA)
+-----------------------------------------
+    mean :  0.0404
+     std :  0.0190
+     min :  0.0091
+     max :  0.0802
+  median :  0.0373
+     p10 :  0.0277
+     p90 :  0.0696
+
+LQ (Pred % of GT Resynth)
+-------------------------
+    mean :  97.8296
+     std :  29.2703
+     min :  61.5316
+     max :  155.9026
+  median :  96.0952
+     p10 :  64.7964
+     p90 :  138.3175
+
+LA (Pred % of GT Resynth)
+-------------------------
+    mean :  30.5210
+     std :  19.7764
+     min :  0.9056
+     max :  61.7286
+  median :  29.1622
+     p10 :  7.8130
+     p90 :  56.6229
+
+Wrote per-scene CSV: C:\Users\Gmiln\Desktop\BIN2AMBI\Experiments\Perceptual_MSE_No_BG_STATIC\ambiqual_per_scene.csv
+Wrote results log: C:\Users\Gmiln\Desktop\BIN2AMBI\Experiments\Perceptual_MSE_No_BG_STATIC\ambiqual_results.txt

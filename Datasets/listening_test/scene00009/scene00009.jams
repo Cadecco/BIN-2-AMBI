@@ -1,0 +1,368 @@
+{
+  "annotations": [
+    {
+      "annotation_metadata": {
+        "curator": {
+          "name": "",
+          "email": ""
+        },
+        "annotator": {},
+        "version": "",
+        "corpus": "",
+        "annotation_tools": "",
+        "annotation_rules": "",
+        "validation": "",
+        "data_source": ""
+      },
+      "namespace": "ambiscaper_sound_event",
+      "data": [
+        {
+          "time": 0.0,
+          "duration": 8.0,
+          "value": {
+            "source_file": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\samples\\backgrounds\\road/cec3_road_S07_016_hoa.wv",
+            "event_id": "bg0",
+            "source_time": 0,
+            "event_time": 0,
+            "event_duration": 8,
+            "event_azimuth": 0,
+            "event_elevation": 0,
+            "event_spread": 0,
+            "snr": 0,
+            "role": "background",
+            "pitch_shift": null,
+            "time_stretch": null,
+            "is_hoa": true
+          },
+          "confidence": 1.0
+        },
+        {
+          "time": 0.0,
+          "duration": 8.0,
+          "value": {
+            "source_file": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Signe Jakobsen - What Have You Done To Me\\bass.flac",
+            "event_id": "fg0",
+            "source_time": 0.0,
+            "event_time": 0,
+            "event_duration": 8,
+            "event_azimuth": 1.8098392792928255,
+            "event_elevation": -0.9159029325588532,
+            "event_spread": 0,
+            "snr": 6.6224552406588035,
+            "role": "foreground",
+            "pitch_shift": null,
+            "time_stretch": null,
+            "is_hoa": false
+          },
+          "confidence": 1.0
+        },
+        {
+          "time": 0.0,
+          "duration": 8.0,
+          "value": {
+            "source_file": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Signe Jakobsen - What Have You Done To Me\\other.flac",
+            "event_id": "fg1",
+            "source_time": 0.0,
+            "event_time": 0,
+            "event_duration": 8,
+            "event_azimuth": 5.339882075422926,
+            "event_elevation": -1.1419319496624647,
+            "event_spread": 0,
+            "snr": 6.43054390578333,
+            "role": "foreground",
+            "pitch_shift": null,
+            "time_stretch": null,
+            "is_hoa": false
+          },
+          "confidence": 1.0
+        },
+        {
+          "time": 0.0,
+          "duration": 8.0,
+          "value": {
+            "source_file": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Signe Jakobsen - What Have You Done To Me\\drums.flac",
+            "event_id": "fg2",
+            "source_time": 0.0,
+            "event_time": 0,
+            "event_duration": 8,
+            "event_azimuth": 1.2938374492940736,
+            "event_elevation": -0.9245724914667913,
+            "event_spread": 0,
+            "snr": 1.7596581520421972,
+            "role": "foreground",
+            "pitch_shift": null,
+            "time_stretch": null,
+            "is_hoa": false
+          },
+          "confidence": 1.0
+        },
+        {
+          "time": 0.0,
+          "duration": 8.0,
+          "value": {
+            "source_file": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Signe Jakobsen - What Have You Done To Me\\vocals.flac",
+            "event_id": "fg3",
+            "source_time": 0.0,
+            "event_time": 0,
+            "event_duration": 8,
+            "event_azimuth": 0.9909769229945873,
+            "event_elevation": 0.4758521057524119,
+            "event_spread": 0,
+            "snr": 8.0323851177171,
+            "role": "foreground",
+            "pitch_shift": null,
+            "time_stretch": null,
+            "is_hoa": false
+          },
+          "confidence": 1.0
+        }
+      ],
+      "sandbox": {
+        "ambiscaper": {
+          "duration": 8,
+          "fg_path": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Signe Jakobsen - What Have You Done To Me",
+          "bg_path": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\samples\\backgrounds",
+          "fg_spec": [
+            [
+              [
+                "const",
+                "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Signe Jakobsen - What Have You Done To Me\\bass.flac"
+              ],
+              null,
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "const",
+                8
+              ],
+              [
+                "uniform",
+                0,
+                6.283185307179586
+              ],
+              [
+                "uniform",
+                -1.5707963267948966,
+                1.5707963267948966
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "uniform",
+                0,
+                10
+              ],
+              "foreground",
+              null,
+              null,
+              false
+            ],
+            [
+              [
+                "const",
+                "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Signe Jakobsen - What Have You Done To Me\\other.flac"
+              ],
+              null,
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "const",
+                8
+              ],
+              [
+                "uniform",
+                0,
+                6.283185307179586
+              ],
+              [
+                "uniform",
+                -1.5707963267948966,
+                1.5707963267948966
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "uniform",
+                0,
+                10
+              ],
+              "foreground",
+              null,
+              null,
+              false
+            ],
+            [
+              [
+                "const",
+                "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Signe Jakobsen - What Have You Done To Me\\drums.flac"
+              ],
+              null,
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "const",
+                8
+              ],
+              [
+                "uniform",
+                0,
+                6.283185307179586
+              ],
+              [
+                "uniform",
+                -1.5707963267948966,
+                1.5707963267948966
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "uniform",
+                0,
+                10
+              ],
+              "foreground",
+              null,
+              null,
+              false
+            ],
+            [
+              [
+                "const",
+                "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Signe Jakobsen - What Have You Done To Me\\vocals.flac"
+              ],
+              null,
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "const",
+                8
+              ],
+              [
+                "uniform",
+                0,
+                6.283185307179586
+              ],
+              [
+                "uniform",
+                -1.5707963267948966,
+                1.5707963267948966
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "uniform",
+                0,
+                10
+              ],
+              "foreground",
+              null,
+              null,
+              false
+            ]
+          ],
+          "bg_spec": [
+            [
+              [
+                "const",
+                "road/cec3_road_S07_016_hoa.wv"
+              ],
+              null,
+              [
+                "const",
+                0
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "const",
+                8
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "const",
+                0
+              ],
+              "background",
+              null,
+              null,
+              false
+            ]
+          ],
+          "ref_db": -25,
+          "ambisonics_order": 5,
+          "ambisonics_spread_slope": 1.0,
+          "fade_in_len": 0.01,
+          "fade_out_len": 0.01,
+          "n_events": 4,
+          "polyphony_max": 4,
+          "polyphony_gini": 1.0,
+          "allow_repeated_source": false
+        }
+      },
+      "time": 0,
+      "duration": 8
+    }
+  ],
+  "file_metadata": {
+    "title": "",
+    "artist": "",
+    "release": "",
+    "duration": 8,
+    "identifiers": {},
+    "jams_version": "0.3.5"
+  },
+  "sandbox": {}
+}

@@ -1,0 +1,240 @@
+{
+  "annotations": [
+    {
+      "annotation_metadata": {
+        "curator": {
+          "name": "",
+          "email": ""
+        },
+        "annotator": {},
+        "version": "",
+        "corpus": "",
+        "annotation_tools": "",
+        "annotation_rules": "",
+        "validation": "",
+        "data_source": ""
+      },
+      "namespace": "ambiscaper_sound_event",
+      "data": [
+        {
+          "time": 0.0,
+          "duration": 8.0,
+          "value": {
+            "source_file": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\samples\\backgrounds\\road/cec3_road_S07_026_hoa.wv",
+            "event_id": "bg0",
+            "source_time": 0,
+            "event_time": 0,
+            "event_duration": 8,
+            "event_azimuth": 0,
+            "event_elevation": 0,
+            "event_spread": 0,
+            "snr": 0,
+            "role": "background",
+            "pitch_shift": null,
+            "time_stretch": null,
+            "is_hoa": true
+          },
+          "confidence": 1.0
+        },
+        {
+          "time": 0.0,
+          "duration": 8.0,
+          "value": {
+            "source_file": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Secretariat - Borderline\\vocals.flac",
+            "event_id": "fg0",
+            "source_time": 0.0,
+            "event_time": 0,
+            "event_duration": 8,
+            "event_azimuth": 5.646736257022536,
+            "event_elevation": -0.6773411316012624,
+            "event_spread": 0,
+            "snr": 10.926891327247013,
+            "role": "foreground",
+            "pitch_shift": null,
+            "time_stretch": null,
+            "is_hoa": false
+          },
+          "confidence": 1.0
+        },
+        {
+          "time": 0.0,
+          "duration": 8.0,
+          "value": {
+            "source_file": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Secretariat - Borderline\\other.flac",
+            "event_id": "fg1",
+            "source_time": 0.0,
+            "event_time": 0,
+            "event_duration": 8,
+            "event_azimuth": 1.4449289906579512,
+            "event_elevation": -0.6179380194897921,
+            "event_spread": 0,
+            "snr": 11.515339897574666,
+            "role": "foreground",
+            "pitch_shift": null,
+            "time_stretch": null,
+            "is_hoa": false
+          },
+          "confidence": 1.0
+        }
+      ],
+      "sandbox": {
+        "ambiscaper": {
+          "duration": 8,
+          "fg_path": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Secretariat - Borderline",
+          "bg_path": "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\samples\\backgrounds",
+          "fg_spec": [
+            [
+              [
+                "const",
+                "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Secretariat - Borderline\\vocals.flac"
+              ],
+              null,
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "const",
+                8
+              ],
+              [
+                "uniform",
+                0,
+                6.283185307179586
+              ],
+              [
+                "uniform",
+                -1.5707963267948966,
+                1.5707963267948966
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "uniform",
+                5,
+                15
+              ],
+              "foreground",
+              null,
+              null,
+              false
+            ],
+            [
+              [
+                "const",
+                "C:\\Users\\Gmiln\\Trinity College Dublin\\Nils Peters - 2025-Gavin-Bin2FOA\\resources\\listening_test\\Secretariat - Borderline\\other.flac"
+              ],
+              null,
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "uniform",
+                0,
+                8
+              ],
+              [
+                "const",
+                8
+              ],
+              [
+                "uniform",
+                0,
+                6.283185307179586
+              ],
+              [
+                "uniform",
+                -1.5707963267948966,
+                1.5707963267948966
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "uniform",
+                5,
+                15
+              ],
+              "foreground",
+              null,
+              null,
+              false
+            ]
+          ],
+          "bg_spec": [
+            [
+              [
+                "const",
+                "road/cec3_road_S07_026_hoa.wv"
+              ],
+              null,
+              [
+                "const",
+                0
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "const",
+                8
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "const",
+                0
+              ],
+              [
+                "const",
+                0
+              ],
+              "background",
+              null,
+              null,
+              false
+            ]
+          ],
+          "ref_db": -25,
+          "ambisonics_order": 5,
+          "ambisonics_spread_slope": 1.0,
+          "fade_in_len": 0.01,
+          "fade_out_len": 0.01,
+          "n_events": 2,
+          "polyphony_max": 2,
+          "polyphony_gini": 1.0,
+          "allow_repeated_source": false
+        }
+      },
+      "time": 0,
+      "duration": 8
+    }
+  ],
+  "file_metadata": {
+    "title": "",
+    "artist": "",
+    "release": "",
+    "duration": 8,
+    "identifiers": {},
+    "jams_version": "0.3.5"
+  },
+  "sandbox": {}
+}

@@ -1,0 +1,91 @@
+===== TEST SET EVALUATION =====
+Batches evaluated: 75
+Total test clips evaluated: 600
+Normalized MSE (Global):    7.663183e-02
+Denormalized MSE (Global):  7.663183e-02
+Weighted Mean Angular Error (Global): 27.01°
+
+===== MSE PER GROUND TRUTH CHANNEL =====
+Channel              | Normalized MSE 
+--------------------------------------
+Diffuseness          | 7.990341e-03
+X-Intensity          | 1.052543e-01
+Y-Intensity          | 7.529357e-02
+Z-Intensity          | 1.179891e-01
+
+===== PERFORMANCE BY DIFFICULTY =====
+Level        | Count  | WMAE (deg)   | Norm MSE    
+-------------------------------------------------------
+1.0          | 126    | 19.94        | 4.848706e-02
+2.0          | 204    | 24.76        | 6.775457e-02
+3.0          | 149    | 29.71        | 8.881789e-02
+4.0          | 82     | 32.43        | 9.810462e-02
+5.0          | 23     | 40.39        | 1.316311e-01
+6.0          | 15     | 34.62        | 1.082000e-01
+7.0          | 1      | 36.91        | 1.188367e-01
+
+===== PERFORMANCE BY NUMBER OF EVENTS =====
+N Events     | Count  | WMAE (deg)   | Norm MSE    
+-------------------------------------------------------
+1            | 144    | 19.29        | 4.496880e-02
+2            | 238    | 25.18        | 6.989543e-02
+3            | 152    | 31.93        | 9.793884e-02
+4            | 42     | 37.63        | 1.195986e-01
+5            | 24     | 38.62        | 1.232763e-01
+
+===== PERFORMANCE BY SNR BUCKET =====
+SNR Bucket           | Count  | WMAE (deg)   | Norm MSE    
+-----------------------------------------------------------------
+None                 | 600    | 27.01        | 7.663183e-02
+
+===== Normalized MSE distribution (per sample) =====
+Count: 600 | Mean: 7.663183e-02 | Std: 5.536407e-02
+Min: 2.291992e-03 (scene: scene05708) | Max: 5.012175e-01 (scene: scene05823)
+P50: 6.792026e-02
+P90: 1.502984e-01
+P95: 1.714449e-01
+P99: 2.372973e-01
+
+===== WMAE distribution (per sample) =====
+Count: 600 | Mean: 2.688469e+01 | Std: 1.376765e+01
+Min: 1.664479e+00° (scene: scene05708) | Max: 1.015830e+02° (scene: scene05823)
+P50: 2.569634e+01°
+P90: 4.579655e+01°
+P95: 5.032664e+01°
+P99: 6.208352e+01°
+
+===== WITHIN-SCENE VARIATION (tile-wise MSE, averaged over channels) =====
+Each scene yields a distribution of (F x T) tile errors; we report the
+mean and std of that distribution, then summarise those across all scenes.
+Dataset-wide avg (F, T) MSE  map saved to: /content/drive/MyDrive/BIN2AMBI/experiments/6000scenes_no_bg/CRNN_V15_ACCDOA_V5_Loss_NO_ROTATION/test_avg_tile_mse_map.npy
+Dataset-wide avg (F, T) WMAE map saved to: /content/drive/MyDrive/BIN2AMBI/experiments/6000scenes_no_bg/CRNN_V15_ACCDOA_V5_Loss_NO_ROTATION/test_avg_tile_wmae_map.npy
+
+  Per-scene tile MSE mean  (distribution across scenes):
+    Mean: 7.663183e-02 | Std: 5.536407e-02
+    P50: 6.792026e-02
+    P90: 1.502984e-01
+    P95: 1.714449e-01
+    P99: 2.372973e-01
+
+  Per-scene tile MSE std   (spread of error *within* a scene):
+    Mean: 7.600228e-02 | Std: 4.392508e-02
+    P50: 6.993247e-02
+    P90: 1.370208e-01
+    P95: 1.540476e-01
+    P99: 1.803732e-01
+
+===== WITHIN-SCENE VARIATION (tile-wise WMAE, averaged over channels) =====
+
+  Per-scene tile WMAE mean (distribution across scenes):
+    Mean: 26.7042° | Std: 13.2851°
+    P50: 25.2260°
+    P90: 44.8302°
+    P95: 49.5341°
+    P99: 59.0578°
+
+  Per-scene tile WMAE std  (spread of error *within* a scene):
+    Mean: 17.3782° | Std: 8.3343°
+    P50: 16.5819°
+    P90: 28.3912°
+    P95: 30.9265°
+    P99: 37.7073°

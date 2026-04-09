@@ -1,0 +1,160 @@
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+
+class CRNN(nn.Module):
+    """
+    Frequency-preserving GRU with ONLY ONE frequency pool:
+      F: 64 -> 32  (so GRU sees F' = 32 bins)
+
+    Encoder:
+      s0: (B,128,64,T)  skip
+      s1: (B,128,32,T)  skip + GRU input
+
+    Decoder:
+      start at 32, fuse with s1
+      upsample 32 -> 64, fuse with s0
+    """
+
+    def __init__(self, output_dim=1, f_bins=64, rnn_hidden=128):
+        super().__init__()
+
+        self.f_bins = f_bins
+        self.output_dim = output_dim
+
+        # -------- Encoder (1 pool: 64->32) --------
+        self.enc_conv0 = nn.Sequential(
+            nn.Conv2d(3, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+        )  # -> (B,128,64,T)
+
+        self.pool1 = nn.MaxPool2d((2, 1))  # 64 -> 32
+
+        self.enc_conv1 = nn.Sequential(
+            nn.Conv2d(128, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+        )  # -> (B,128,32,T)
+
+        self.f_reduced = f_bins // 2  # 32 if f_bins=64
+        self.audio_ch = 128
+
+        # ---------------------------
+        # CHANGE #1: light frequency mixing before GRU
+        # ---------------------------
+        self.freq_mix = nn.Conv2d(128, 128, kernel_size=(3, 1), padding=(1, 0))
+
+        # -------- Rotation branch --------
+        self.rotation_branch = nn.Sequential(
+            nn.Conv2d(1, 128, kernel_size=(4, 1)),
+            nn.ReLU(),
+            nn.Conv2d(128, 128, kernel_size=1),
+            nn.ReLU(),
+        )
+        self.rot_ch = 128
+
+        # -------- GRU per frequency-bin (shared weights) --------
+        self.gru_input_dim = self.audio_ch + self.rot_ch  # 256
+        self.gru = nn.GRU(
+            input_size=self.gru_input_dim,
+            hidden_size=rnn_hidden,
+            batch_first=True
+        )
+
+        # -------- Decoder (starts at 32) --------
+        self.dec_pre = nn.Sequential(
+            nn.Conv2d(rnn_hidden, 128, kernel_size=(1, 3), padding=(0, 1)),
+            nn.ReLU(),
+        )  # (B,128,32,T)
+
+        # ---------------------------
+        # CHANGE #2: stronger fuse blocks (1x1 then 3x3 refinement)
+        # ---------------------------
+        self.fuse1 = nn.Sequential(
+            nn.Conv2d(128 + 128, 128, kernel_size=1),
+            nn.ReLU(),
+            nn.Conv2d(128, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+        )
+
+        # ---------------------------
+        # CHANGE #3: replace ConvTranspose upsample with interpolate + conv refine
+        # ---------------------------
+        self.up64_refine = nn.Sequential(
+            nn.Conv2d(128, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+        )
+
+        self.fuse0 = nn.Sequential(
+            nn.Conv2d(128 + 128, 128, kernel_size=1),
+            nn.ReLU(),
+            nn.Conv2d(128, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+        )
+
+        self.out_conv = nn.Conv2d(128, output_dim, kernel_size=1)
+
+    @staticmethod
+    def _match_freq(x, target_F: int):
+        """Crop/pad x along frequency axis to exactly target_F."""
+        F_now = x.shape[2]
+        if F_now > target_F:
+            return x[:, :, :target_F, :]
+        if F_now < target_F:
+            pad = target_F - F_now
+            return F.pad(x, (0, 0, 0, pad))
+        return x
+
+    def forward(self, spatial, rotation):
+        # spatial:  (B, 3, F, T)
+        # rotation: (B, 4, T)
+        B, _, Freq, T = spatial.shape
+
+        # -------- Encoder with skips --------
+        s0 = self.enc_conv0(spatial)   # (B,128,64,T)
+        x = self.pool1(s0)             # (B,128,32,T)
+        s1 = self.enc_conv1(x)         # (B,128,32,T)  -> GRU input + skip
+
+        # CHANGE #1 applied (frequency mixing)
+        s1 = self.freq_mix(s1)
+
+        # -------- Rotation branch --------
+        r = rotation.unsqueeze(1)      # (B,1,4,T)
+        r = self.rotation_branch(r)    # (B,128,1,T)
+        r = r.squeeze(2).permute(0, 2, 1)  # (B,T,128)
+
+        # -------- Frequency-preserving GRU (F' = 32) --------
+        # s1: (B,128,F',T) -> (B,F',T,128)
+        a = s1.permute(0, 2, 3, 1)  # (B,32,T,128)
+
+        # broadcast rotation across frequency bins: (B,T,128) -> (B,32,T,128)
+        r_exp = r.unsqueeze(1).expand(-1, a.shape[1], -1, -1)
+
+        # concat per-bin features: (B,32,T,256)
+        x = torch.cat([a, r_exp], dim=-1)
+
+        # GRU per frequency bin: (B*32,T,256)
+        B0, Fp, T0, Din = x.shape
+        x = x.reshape(B0 * Fp, T0, Din)
+        x, _ = self.gru(x)  # (B*32,T,hidden)
+
+        # back to (B, hidden, 32, T)
+        x = x.reshape(B0, Fp, T0, -1).permute(0, 3, 1, 2)
+
+        # -------- Decoder --------
+        x = self.dec_pre(x)  # (B,128,32,T)
+
+        # fuse at 32 with s1 (CHANGE #2 already in module)
+        s1m = self._match_freq(s1, x.shape[2])
+        x = self.fuse1(torch.cat([x, s1m], dim=1))
+
+        # 32 -> 64 (CHANGE #3: interpolate + refine), then fuse with s0 (CHANGE #2)
+        x = F.interpolate(x, scale_factor=(2, 1), mode="nearest")  # (B,128,64,T)
+        x = self.up64_refine(x)
+
+        s0m = self._match_freq(s0, x.shape[2])
+        x = self.fuse0(torch.cat([x, s0m], dim=1))
+
+        y = self.out_conv(x)  # (B,output_dim,64,T)
+        y = self._match_freq(y, Freq)
+        return y

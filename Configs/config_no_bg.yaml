@@ -1,0 +1,83 @@
+dataset_name: listening_test
+
+paths:
+  base_dir: datasets
+  binaural_folder: Binaural
+  ambisonics_folder: FOA
+  features_folder: features
+  groundtruth_folder: groundtruth
+  fft_folder: fft
+  save_to_drive: false
+  google_drive_path: G:\My Drive\BIN2AMBI
+
+generation:
+  file_type: ".flac"
+  scene_duration: 8
+  num_scenes: 14
+  num_events: 5
+  start_id: 14
+  noise_reference: -25
+  num_channels: 5 
+  bg_chance: 1.0
+  ht_synthetic: true
+  event:
+    azimuth_range: [0, 2] # Angle in multiples of pi
+    elevation_range: [0, 0] # Angle in multiples of pi
+    spread: 0
+    snr: 10
+    pitch_shift: None
+    time_stretch: None
+
+analysis:
+  sample_rate: 48000
+  window_size: 1024
+  window_length: 40
+  overlap: 0.5
+  start_freq: 0
+  stop_freq: 24000
+  alpha: 0.90
+  extract:
+    MEAN_MAG: true
+    ITD: false
+    ILD: true
+    IPD: true
+    IC: true
+  rotation:
+    rot0: true
+    rot1: false
+  mel:
+    active: true
+    n_mels: 64
+
+dirac_analysis:
+  intensity_smooth: 0
+  intensity_short_smooth: 0
+  energy_smooth: 0
+  dirsmooth:
+    limf: 3000
+    cycles: 20
+  diffsmooth:
+    limf: 10000
+    cycles: 30
+  mel:
+    active: true
+    n_mels: 64
+    htk: false
+    f_max: 24000
+
+training:
+  batch_size: 8
+  lr: 0.001
+  num_epochs: 50
+  device: "cuda"
+  seed: 17
+  train_ratio: 0.8
+  val_ratio: 0.1
+  test_ratio: 0.1
+  inputs: ["ILD", "IPD_sine", "IPD_cosine", "mean_mag", "IC", "rotation"]
+  model:
+    rnn_units: 128
+    
+metadata:
+  save_csv: true
+  csv_name: features_metadata.csv

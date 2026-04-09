@@ -1,0 +1,81 @@
+===== TRAINING CONFIGURATION =====
+
+===== LOSS FUNCTION =====
+def accdoa_loss(pred, target, beta=0.2):
+    """
+    pred/target shape: (B, 4, F, T)
+    C=0: Diffuseness (psi)
+    C=1,2,3: X, Y, Z coordinates
+
+    ACCDOA: Activity-Coupled Cartesian Direction of Arrival
+    The target ACCDOA vector = activity_weight * unit_direction
+    where activity_weight = t_mag * (1 - t_psi)  [intensity × non-diffuseness]
+    """
+    # 1. Extract Channels
+    p_psi = pred[:, 0:1, :, :]
+    t_psi = target[:, 0:1, :, :]
+
+    p_xyz = pred[:, 1:, :, :]      # (B, 3, F, T)
+    t_xyz = target[:, 1:, :, :]    # (B, 3, F, T)
+
+    # Clamp: keep psi in [0,1]
+    #p_psi = p_psi.clamp(0.0, 1.0)
+
+    # 2. Compute Activity Weight per tile
+    # t_mag: how much energy is in this tile
+    # (1 - t_psi): how "directional" (non-diffuse) the sound is
+    # Together: strong weight only where there's a clear, energetic source
+    with torch.no_grad():
+        t_mag = torch.norm(t_xyz, dim=1, keepdim=True)          # (B, 1, F, T)
+        activity = t_mag * (1 - t_psi)                # (B, 1, F, T)
+
+        # Unit direction of target (safe divide)
+        t_unit = t_xyz / (t_mag + 1e-8)                        # (B, 3, F, T)
+
+        # Ground truth ACCDOA vector: direction scaled by activity
+        t_accdoa = activity * t_unit                            # (B, 3, F, T)
+
+    # 3. Predicted ACCDOA vector
+    # Predicted unit direction scaled by predicted activity
+    p_mag = torch.norm(p_xyz, dim=1, keepdim=True)
+    p_unit = p_xyz / (p_mag + 1e-8)
+    #p_accdoa = p_unit * activity # Using the target activity here
+    p_accdoa = p_xyz
+
+    # 4. ACCDOA Loss: MSE between activity-weighted direction vectors
+    # Tiles with no energy or high diffuseness naturally have t_accdoa ≈ 0,
+    # so the model is only penalised where a real directional source exists.
+    accdoa_loss = F.l1_loss(p_accdoa, t_accdoa)
+
+    # 5. Diffuseness Loss
+    psi_loss = torch.nn.functional.l1_loss(p_psi, t_psi, reduction='none').mean()
+
+    return accdoa_loss + beta * psi_loss
+
+===== OPTIMIZER =====
+Type: AdamW
+  lr: 0.0003
+  betas: (0.9, 0.999)
+  eps: 1e-08
+  weight_decay: 0.0001
+  amsgrad: False
+  maximize: False
+  foreach: None
+  capturable: False
+  differentiable: False
+  fused: None
+  decoupled_weight_decay: True
+
+===== SCHEDULER =====
+Type: CosineAnnealingWarmRestarts
+  T_0: 50
+  T_i: 50
+  T_mult: 1
+  eta_min: 1e-06
+  T_cur: 0
+  base_lrs: [0.0003]
+  last_epoch: 0
+  _step_count: 0
+  _is_initial: False
+  _get_lr_called_within_step: False
+  _last_lr: [0.0003]

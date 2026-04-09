@@ -1,0 +1,72 @@
+=== Running AMBIQUAL evaluation ===
+Dataset:    listening_test
+Experiment: Perceptual_MAE_No_BG
+GT dir:     C:\Users\Gmiln\Desktop\BIN2AMBI\Datasets\listening_test\FOA
+Pred dir:   C:\Users\Gmiln\Desktop\BIN2AMBI\Experiments\Perceptual_MAE_No_BG\pred_resynth
+Output CSV: C:\Users\Gmiln\Desktop\BIN2AMBI\Experiments\Perceptual_MAE_No_BG\ambiqual_per_scene.csv
+
+=== AMBIQUAL Test Set Summary ===
+Scored scenes: 14 (GT indexed: 14, GT resynth indexed: 14, Pred resynth indexed: 14)
+
+GT Resynth - Listening Quality (LQ)
+-----------------------------------
+    mean :  0.7375
+     std :  0.1933
+     min :  0.4517
+     max :  1.0000
+  median :  0.6936
+     p10 :  0.5015
+     p90 :  0.9983
+
+GT Resynth - Localization Accuracy (LA)
+---------------------------------------
+    mean :  0.3181
+     std :  0.3764
+     min :  0.0448
+     max :  1.0000
+  median :  0.1070
+     p10 :  0.0590
+     p90 :  0.9843
+
+Pred Resynth - Listening Quality (LQ)
+-------------------------------------
+    mean :  0.7729
+     std :  0.1515
+     min :  0.5818
+     max :  0.9881
+  median :  0.7314
+     p10 :  0.6059
+     p90 :  0.9806
+
+Pred Resynth - Localization Accuracy (LA)
+-----------------------------------------
+    mean :  0.2183
+     std :  0.2877
+     min :  0.0283
+     max :  0.9447
+  median :  0.0891
+     p10 :  0.0443
+     p90 :  0.6573
+
+LQ (Pred % of GT Resynth)
+-------------------------
+    mean :  106.9410
+     std :  11.7861
+     min :  96.7081
+     max :  139.0513
+  median :  105.1305
+     p10 :  96.8643
+     p90 :  119.9947
+
+LA (Pred % of GT Resynth)
+-------------------------
+    mean :  83.7054
+     std :  24.7329
+     min :  2.8258
+     max :  104.0937
+  median :  89.5448
+     p10 :  75.9141
+     p90 :  100.1572
+
+Wrote per-scene CSV: C:\Users\Gmiln\Desktop\BIN2AMBI\Experiments\Perceptual_MAE_No_BG\ambiqual_per_scene.csv
+Wrote results log: C:\Users\Gmiln\Desktop\BIN2AMBI\Experiments\Perceptual_MAE_No_BG\ambiqual_results.txt

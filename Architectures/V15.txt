@@ -1,0 +1,130 @@
+import torch
+import torch.nn as nn
+import torch.nn.functional as torch_f
+
+class CRNN(nn.Module):
+    def __init__(self, in_channels=5, output_dim=4, f_bins=64, rnn_hidden=256,
+                 dropout=0.2):
+        super().__init__()
+
+        self.f_bins = f_bins
+        self.output_dim = output_dim
+
+        # --- Encoder: Downsample Frequency by 4x total ---
+        self.enc_conv0 = nn.Sequential(
+            nn.Conv2d(in_channels, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+        )  # (B, 128, 64, T)
+
+        self.enc_conv1 = nn.Sequential(
+            nn.Conv2d(128, 128, kernel_size=3, padding=1, stride=(2, 1)),
+            nn.ReLU(),
+        )  # (B, 128, 32, T)
+
+        self.enc_conv2 = nn.Sequential(
+            nn.Conv2d(128, 128, kernel_size=3, padding=1, stride=(2, 1)),
+            nn.ReLU(),
+        )  # (B, 128, 16, T)
+
+        self.f_reduced = f_bins // 4  # 64 -> 16
+        self.audio_out_dim = 128 * self.f_reduced
+
+        # --- Rotation branch (4 -> 128) ---
+        self.rotation_branch = nn.Sequential(
+            nn.Conv2d(1, 128, kernel_size=(4, 1)),
+            nn.ReLU(),
+            nn.Conv2d(128, 128, kernel_size=1),
+            nn.ReLU()
+        )
+
+        # --- GRU ---
+        self.gru = nn.GRU(
+            input_size=self.audio_out_dim + 128,
+            hidden_size=rnn_hidden,
+            batch_first=True
+        )
+
+        # --- NEW (Model B idea): directly project GRU output to (128, 16) ---
+        # Maps (B, T, rnn_hidden) -> (B, T, 128*16)
+        self.tf_proj = nn.Linear(rnn_hidden, 128 * self.f_reduced)
+
+        # --- Decoder: Mirroring the Encoder with Skip Connections ---
+        self.dec_pre = nn.Sequential(
+            nn.Conv2d(rnn_hidden, 128, kernel_size=(1, 3), padding=(0, 1)),
+            nn.ReLU(),
+        )
+
+        self.fuse1 = nn.Sequential(
+            nn.Conv2d(256, 128, kernel_size=1),
+            nn.ReLU(),
+        )
+
+        self.up1 = nn.ConvTranspose2d(128, 128, kernel_size=(2, 1), stride=(2, 1))
+        self.fuse2 = nn.Sequential(
+            nn.Conv2d(256, 128, kernel_size=1),
+            nn.ReLU(),
+        )
+
+        self.up2 = nn.ConvTranspose2d(128, 128, kernel_size=(2, 1), stride=(2, 1))
+        self.fuse3 = nn.Sequential(
+            nn.Conv2d(256, 128, kernel_size=1),
+            nn.ReLU(),
+        )
+
+        self.out_conv = nn.Conv2d(128, output_dim, kernel_size=1)
+
+        # Dropout
+        self.spatial_drop = nn.Dropout2d(dropout)
+        self.rnn_drop = nn.Dropout(dropout)
+
+    def forward(self, spatial, rotation):
+        B, C, F, T = spatial.shape
+
+        # ---- Encode ----
+        s0 = self.enc_conv0(spatial)     # (B, 128, 64, T)
+        s0 = self.spatial_drop(s0)
+        s1 = self.enc_conv1(s0)          # (B, 128, 32, T)
+        s1 = self.spatial_drop(s1)
+        s2 = self.enc_conv2(s1)          # (B, 128, 16, T)
+        s2 = self.spatial_drop(s2)
+
+        # Audio to GRU
+        x_audio = s2.permute(0, 3, 1, 2).reshape(B, T, -1)  # (B, T, 128*16)
+
+        # Rotation branch (expects rotation: (B, 4, T))
+        r = rotation.unsqueeze(1)          # (B, 1, 4, T)
+        r = self.rotation_branch(r)        # (B, 128, 1, T)
+        r = r.squeeze(2).permute(0, 2, 1)  # (B, T, 128)
+
+        # GRU
+        x = torch.cat([x_audio, r], dim=-1)  # (B, T, 2176)
+        x, _ = self.gru(x)                   # (B, T, rnn_hidden)
+        x = self.rnn_drop(x)
+
+        # ---- Decode with Skip Connections (NO (B,hidden,1,T) bottleneck) ----
+        # Model-B-style direct TF projection at F=16:
+        x = self.tf_proj(x)                          # (B, T, 128*16)
+        x = x.view(B, T, self.f_reduced, 128)        # (B, T, 16, 128)
+        x = x.permute(0, 3, 2, 1).contiguous()       # (B, 128, 16, T)
+
+        # From here on, keep EVERYTHING else identical to V12:
+        # (dec_pre is now redundant but kept to avoid changing the architecture)
+        # It expects (B, rnn_hidden, 1, T) in the original, so we bypass it.
+        # We proceed exactly from the point where V12 had (B, 128, 16, T).
+
+        x = torch.cat([x, s2], dim=1)                # 128 + 128 = 256
+        x = self.fuse1(x)
+
+        x = self.up1(x)                               # -> (B, 128, 32, T)
+        if x.shape[3] != s1.shape[3]:
+            x = torch_f.interpolate(x, size=(32, T))
+        x = torch.cat([x, s1], dim=1)                 # 256
+        x = self.fuse2(x)
+
+        x = self.up2(x)                               # -> (B, 128, 64, T)
+        if x.shape[3] != s0.shape[3]:
+            x = torch_f.interpolate(x, size=(64, T))
+        x = torch.cat([x, s0], dim=1)                 # 256
+        x = self.fuse3(x)
+
+        return self.out_conv(x)
