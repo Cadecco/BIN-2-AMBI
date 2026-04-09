@@ -1,16 +1,5 @@
-"""
-plot_wmae_distributions.py
---------------------------
-Produces two plots:
-  1. Horizontal WMAE difference vs azimuth  (bar chart, 10° bins)
-  2. Vertical WMAE difference vs elevation  (horizontal bar chart, 10° bins)
-
-For single-source scenes only — clean 1:1 mapping of scene → event → position.
-
-Positive ΔWMAE = rotation model is better (lower error).
-
-Configure the experiment at the top of this file.
-"""
+# Plotting Script - plot the results for horizontal and vertical
+# decomposition of angular error
 
 from pathlib import Path
 import json

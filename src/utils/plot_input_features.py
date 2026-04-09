@@ -1,3 +1,5 @@
+# Plotting Script - Plot an example of input features to check them.
+
 import os
 import torch
 import matplotlib.pyplot as plt

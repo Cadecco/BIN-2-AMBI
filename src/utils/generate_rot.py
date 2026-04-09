@@ -1,3 +1,5 @@
+# Generate synthetic headtracking rotation trajectories
+
 import numpy as np
 import soundfile as sf
 import os

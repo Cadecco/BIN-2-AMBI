@@ -1,3 +1,5 @@
+# Plotting Script - Plot the results from the perceptual test .csv file
+
 import sys
 import pandas as pd
 import numpy as np

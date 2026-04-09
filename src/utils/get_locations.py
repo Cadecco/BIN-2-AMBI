@@ -1,3 +1,5 @@
+# Extract spatial locations from .jams file in the dataset
+
 import argparse
 import csv
 import json

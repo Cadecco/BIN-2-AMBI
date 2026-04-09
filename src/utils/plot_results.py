@@ -1,3 +1,5 @@
+# Plotting Script - Plot spectrogram results from an experiment
+
 import ast
 import csv
 import json

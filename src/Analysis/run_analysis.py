@@ -1,4 +1,4 @@
-# This program starts the analysis of the 
+# This program starts the analysis of the input
 # binaural .wav files in the dataset:
 
 from pathlib import Path

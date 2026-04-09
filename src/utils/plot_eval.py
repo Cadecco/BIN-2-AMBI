@@ -1,3 +1,5 @@
+# Plotting Script - Plot results of the AMBIQUAL evaluation
+
 from __future__ import annotations
 
 import json

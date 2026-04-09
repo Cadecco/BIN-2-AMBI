@@ -1,3 +1,5 @@
+# Plotting script - Plot all input and output features
+
 import os
 import re
 import torch
@@ -18,7 +20,7 @@ SHOW_GT = True       # Set to False to hide groundtruth
 # --- Groundtruth Options ---
 GT_START_WITH_DIFFUSENESS = True   # If showing GT only, put Diffuseness first
 GT_SKIP_MEAN_MAG = True           # If True, skip GT channel 0 (mean magnitude)
-GT_TRIANGLE_LAYOUT = True          # If showing GT only with Diffuseness,Y,Z,X -> put Diffuseness centered on top, Y/Z/X below
+GT_TRIANGLE_LAYOUT = True          
 
 def find_scene_tag(filename: str):
     """Extracts 'sceneX' from filenames."""

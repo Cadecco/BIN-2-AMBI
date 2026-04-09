@@ -1,3 +1,5 @@
+# Plot Synthetic headtracking yaw channel
+
 import numpy as np
 import matplotlib.pyplot as plt
 import soundfile as sf

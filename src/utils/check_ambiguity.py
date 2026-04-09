@@ -1,3 +1,5 @@
+# Plotting script - Check the distribution of ambiguous scenes.
+
 import csv
 import json
 from pathlib import Path
