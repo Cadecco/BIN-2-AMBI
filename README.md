@@ -27,7 +27,7 @@ The following have been removed:
 - Private configurations and internal tooling  
 - Any non-public data  
 
-The repository preserves the **core training workflow and methodology** used in the thesis.
+The repository preserves the **core training workflow, training and evaluation methodology** used in the thesis.
 
 ---
 
